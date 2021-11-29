@@ -19,54 +19,66 @@ const mealListLink = () => document.getElementById('meal-list-link');
 
 /** Templates **/
 
-const homePageTemplate = () => {
-  return `
-    <h1 class="center-align">Welcome to our Meal Planner</h1>
-  `
-}
-
 const mealListTemplate = () => {
   return `
-  <h1>Meal List</h1>
-  <table class="highlight">
-    <thead>
-      <tr>
-          <th>Date</th>
-          <th>Meal</th>
-          <th>Meal Name</th>
-          <th>Diet</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${ renderMeals() }
-    </tbody>
-  </table>
+  
   `
 }
 
 const mealTemplate = (meal) => {
-  return `
-  <tr>
-    <td>${ meal.date }</td>
-    <td>${ meal.meal }</td>
-    <td>${ meal.name }</td>
-    <td>${ meal.diet }</td>
-  </tr>
-  `
+  const tr = document.createElement('tr');
+  const tdDate = document.createElement('td');
+  const tdMeal = document.createElement('td');
+  const tdName = document.createElement('td');
+  const tdDiet = document.createElement('td');
+  tdDate.innerText = meal.date;
+  tdMeal.innerText = meal.meal;
+  tdName.innerText = meal.name;
+  tdDiet.innerText = meal.diet;
+  tr.appendChild(tdDate)
+  tr.appendChild(tdMeal)
+  tr.appendChild(tdName)
+  tr.appendChild(tdDiet);
+  return tr;
 }
 
 /** Renderers **/
 
 const renderHomePage = () => {
-  mainDiv().innerHTML = homePageTemplate();
+  mainDiv().innerHTML = ''
+  const h1 = document.createElement('h1');
+  h1.classList.add('center-align');
+  h1.innerText = 'Welcome to our Meal Planner'
+  mainDiv().appendChild(h1);
 }
 
 const renderMealListPage = () => {
-  mainDiv().innerHTML = mealListTemplate();
-}
-
-const renderMeals = () => {
-  return meals.map(meal => mealTemplate(meal));
+  mainDiv().innerHTML = '';
+  const h1 = document.createElement('h1');
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  const tr = document.createElement('tr');
+  const thDate = document.createElement('th');
+  const thMeal = document.createElement('th');
+  const thMealName = document.createElement('th');
+  const thDiet = document.createElement('th');
+  const tbody = document.createElement('tbody');
+  h1.innerText = 'Meal List'
+  thDate.innerText = 'Date';
+  thMeal.innerText = 'Meal';
+  thMealName.innerText = 'Meal Name';
+  thDiet.innerText = 'Diet';
+  table.classList.add('highlight');
+  tr.appendChild(thDate);
+  tr.appendChild(thMeal);
+  tr.appendChild(thMealName);
+  tr.appendChild(thDiet);
+  thead.appendChild(tr);
+  table.appendChild(thead);
+  meals.forEach(meal => tbody.appendChild(mealTemplate(meal)))
+  table.appendChild(tbody);
+  mainDiv().appendChild(h1);
+  mainDiv().appendChild(table);
 }
 
 /** Events **/
@@ -90,7 +102,6 @@ const mealListLinkEvent = () => {
   {
     e.preventDefault();
     await loadMeals();
-    debugger;
     renderMealListPage();
   })
 }
