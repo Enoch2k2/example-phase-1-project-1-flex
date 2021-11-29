@@ -19,11 +19,11 @@ const mealListLink = () => document.getElementById('meal-list-link');
 
 /** Templates **/
 
-const mealListTemplate = () => {
-  return `
+// const mealListTemplate = () => {
+//   return `
   
-  `
-}
+//   `
+// }
 
 const mealTemplate = (meal) => {
   const tr = document.createElement('tr');
